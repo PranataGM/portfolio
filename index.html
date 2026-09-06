@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muhammad Aria Sastra | Creative Portfolio</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&family=Great+Vibes&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body class="loading">
+
+    <div class="loader">
+        <div class="loader-content">
+            <span class="loader-text">INITIALIZING EXPERIENCE...</span>
+            <div class="loader-progress-bar">
+                <div class="loader-progress"></div>
+            </div>
+            <span class="loader-percentage">0%</span>
+        </div>
+    </div>
+
+    <div class="custom-cursor">
+        <div class="cursor-dot"></div>
+        <div class="cursor-ring"></div>
+        <div class="cursor-text">VIEW</div>
+    </div>
+
+    <div class="noise-overlay"></div>
+    <div class="scanline"></div>
+    <canvas id="particle-canvas"></canvas>
+    
+    <nav class="navbar">
+        <div class="nav-logo">MAS&reg;</div>
+        <div class="nav-links">
+            <a href="#work" data-cursor="hover">WORK</a>
+            <a href="#process" data-cursor="hover">PROCESS</a>
+            <a href="#about" data-cursor="hover">ABOUT</a>
+            <a href="#contact" data-cursor="hover">CONTACT</a>
+        </div>
+        <div class="nav-status">
+            <span class="status-dot"></span>
+            <span>SYSTEM / 001</span>
+        </div>
+        <button class="menu-btn" data-cursor="hover">
+            <span></span>
+            <span></span>
+        </button>
+    </nav>
+
+    <main data-scroll-container>
+        
+        <section class="hero" id="hero">
+            <div class="hero-ambient-light"></div>
+            
+            <div class="hero-bg-text">
+                <h1 class="hero-title-main">PORTFOLIO</h1>
+            </div>
+
+            <div class="wheel-container" id="mahoraga-wheel">
+                <svg viewBox="0 0 500 500" class="wheel-svg" id="wheel-outer">
+                    <circle cx="250" cy="250" r="240" fill="none" stroke="rgba(216, 180, 255, 0.2)" stroke-width="1" stroke-dasharray="4 8" />
+                    <circle cx="250" cy="250" r="230" fill="none" stroke="rgba(157, 78, 221, 0.4)" stroke-width="2" />
+                </svg>
+                <svg viewBox="0 0 500 500" class="wheel-svg" id="wheel-symbols">
+                    <circle cx="250" cy="250" r="200" fill="none" stroke="rgba(255, 255, 255, 0.1)" stroke-width="40" stroke-dasharray="2 12" />
+                    
+                    <g transform="translate(250, 20)">
+                        <polygon points="0,-10 10,10 -10,10" fill="#D8B4FF" opacity="0.8" />
+                        <circle cx="0" cy="0" r="15" fill="none" stroke="#D8B4FF" stroke-width="1" />
+                    </g>
+                    <g transform="translate(480, 250) rotate(90)">
+                        <polygon points="0,-10 10,10 -10,10" fill="#D8B4FF" opacity="0.8" />
+                        <circle cx="0" cy="0" r="15" fill="none" stroke="#D8B4FF" stroke-width="1" />
+                    </g>
+                    <g transform="translate(250, 480) rotate(180)">
+                        <polygon points="0,-10 10,10 -10,10" fill="#D8B4FF" opacity="0.8" />
+                        <circle cx="0" cy="0" r="15" fill="none" stroke="#D8B4FF" stroke-width="1" />
+                    </g>
+                    <g transform="translate(20, 250) rotate(270)">
+                        <polygon points="0,-10 10,10 -10,10" fill="#D8B4FF" opacity="0.8" />
+                        <circle cx="0" cy="0" r="15" fill="none" stroke="#D8B4FF" stroke-width="1" />
+                    </g>
+
+                    <g transform="translate(412, 88) rotate(45)">
+                        <rect x="-4" y="-4" width="8" height="8" fill="#FFFFFF" opacity="0.6" />
+                    </g>
+                    <g transform="translate(412, 412) rotate(135)">
+                        <rect x="-4" y="-4" width="8" height="8" fill="#FFFFFF" opacity="0.6" />
+                    </g>
+                    <g transform="translate(88, 412) rotate(225)">
+                        <rect x="-4" y="-4" width="8" height="8" fill="#FFFFFF" opacity="0.6" />
+                    </g>
+                    <g transform="translate(88, 88) rotate(315)">
+                        <rect x="-4" y="-4" width="8" height="8" fill="#FFFFFF" opacity="0.6" />
+                    </g>
+                </svg>
+                <svg viewBox="0 0 500 500" class="wheel-svg" id="wheel-inner">
+                    <circle cx="250" cy="250" r="140" fill="none" stroke="rgba(199, 125, 255, 0.5)" stroke-width="1" stroke-dasharray="50 20" />
+                    <circle cx="250" cy="250" r="110" fill="none" stroke="rgba(255, 255, 255, 0.2)" stroke-width="2" />
+                    <circle cx="250" cy="250" r="70" fill="none" stroke="rgba(157, 78, 221, 0.8)" stroke-width="4" stroke-dasharray="10 30" />
+                </svg>
+                <div class="wheel-core"></div>
+            </div>
+
+            <div class="hero-decorative-left">
+                <span class="vertical-text">FRONTEND DESIGNER</span>
+                <span class="crosshair">+</span>
+            </div>
+            
+            <div class="hero-decorative-right">
+                <span class="crosshair">+</span>
+                <span class="vertical-text">CREATIVE PORTFOLIO</span>
+            </div>
+
+            <div class="portrait-container">
+                <div class="portrait-wrapper">
+                    <img src="assets/pranataa.png" alt="Muhammad Aria Sastra" class="portrait-base">
+                    <img src="assets/pranataa.png" alt="" class="portrait-glitch portrait-glitch-1">
+                    <img src="assets/pranataa.png" alt="" class="portrait-glitch portrait-glitch-2">
+                    <img src="assets/pranataa.png" alt="" class="portrait-glitch portrait-glitch-3">
+                    <div class="portrait-mask"></div>
+                </div>
+            </div>
+
+            <div class="hero-foreground-ui">
+                <div class="hero-text-left">
+                    <p class="hero-quote">
+                        I BUILD MODERN<br>
+                        AND INTERACTIVE<br>
+                        WEB EXPERIENCES
+                    </p>
+                    <a href="#work" class="cta-button" data-cursor="hover">
+                        AVAILABLE FOR PROJECTS
+                        <i class="ph-fill ph-star"></i>
+                    </a>
+                    <div class="signature">Muhammad Aria Sastra</div>
+                </div>
+
+                <div class="hero-text-right">
+                    <p class="hero-desc">
+                        I'm a Frontend Designer<br>
+                        crafting elegant, functional<br>
+                        and user-centered digital<br>
+                        experiences.
+                    </p>
+                    <div class="hero-coords">
+                        [ 7.7956&deg; S, 110.3695&deg; E ]<br>
+                        YOGYAKARTA, INDONESIA
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scroll-indicator">
+                <span class="scroll-text">SCROLL TO EXPLORE</span>
+                <div class="scroll-line"></div>
+            </div>
+        </section>
+
+        <section class="projects" id="work">
+            <div class="section-header">
+                <h2 class="section-title">SELECTED PROJECTS <span>+</span></h2>
+                <a href="#" class="view-all-link" data-cursor="hover">
+                    VIEW ALL PROJECTS <i class="ph ph-arrow-right"></i>
+                </a>
+            </div>
+
+            <div class="project-grid">
+                
+                <div class="project-card" data-cursor="project">
+                    <div class="project-header">
+                        <span class="project-number">01</span>
+                        <div class="project-info-top">
+                            <h3 class="project-name">TIXMANAGE</h3>
+                            <p class="project-category">Ticket Management</p>
+                        </div>
+                    </div>
+                    <div class="project-image-wrapper">
+                        <div class="project-overlay"></div>
+                        <img src="/assets/This life is not found.jpg" alt="TixManage" class="project-img">
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">SYSTEM</span>
+                        <span class="tag">FRONTEND</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-cursor="project">
+                    <div class="project-header">
+                        <span class="project-number">02</span>
+                        <div class="project-info-top">
+                            <h3 class="project-name">MERCHHUB</h3>
+                            <p class="project-category">E-Commerce Platform</p>
+                        </div>
+                    </div>
+                    <div class="project-image-wrapper">
+                        <div class="project-overlay"></div>
+                        <img src="/assets/This life is not found.jpg?auto=format&fit=crop&q=80" alt="MerchHub" class="project-img">
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">E-COMMERCE</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-cursor="project">
+                    <div class="project-header">
+                        <span class="project-number">03</span>
+                        <div class="project-info-top">
+                            <h3 class="project-name">STOCKFLOW</h3>
+                            <p class="project-category">Inventory System</p>
+                        </div>
+                    </div>
+                    <div class="project-image-wrapper">
+                        <div class="project-overlay"></div>
+                        <img src="/assets/This life is not found.jpg?auto=format&fit=crop&q=80" alt="StockFlow" class="project-img">
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">INVENTORY</span>
+                        <span class="tag">WEB APP</span>
+                    </div>
+                </div>
+
+                <div class="project-card" data-cursor="project">
+                    <div class="project-header">
+                        <span class="project-number">04</span>
+                        <div class="project-info-top">
+                            <h3 class="project-name">MUER VILLAGE</h3>
+                            <p class="project-category">Information System</p>
+                        </div>
+                    </div>
+                    <div class="project-image-wrapper">
+                        <div class="project-overlay"></div>
+                        <img src="/assets/This life is not found.jpg?auto=format&fit=crop&q=80" alt="Muer Village" class="project-img">
+                    </div>
+                    <div class="project-tags">
+                        <span class="tag">PORTAL</span>
+                        <span class="tag">DESIGN</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="process-tools" id="process">
+            <div class="process-section">
+                <h2 class="section-title">MY PROCESS <span>+</span></h2>
+                <div class="process-list">
+                    
+                    <div class="process-item">
+                        <div class="process-num">01</div>
+                        <div class="process-content">
+                            <h3>DISCOVER</h3>
+                            <p>Understanding goals, target audience, and project vision.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="process-item">
+                        <div class="process-num">02</div>
+                        <div class="process-content">
+                            <h3>DEFINE</h3>
+                            <p>Research, strategy, and architecture development.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="process-item">
+                        <div class="process-num">03</div>
+                        <div class="process-content">
+                            <h3>DESIGN</h3>
+                            <p>Crafting intuitive layouts, wireframes, and modern UI.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="process-item">
+                        <div class="process-num">04</div>
+                        <div class="process-content">
+                            <h3>DEVELOP</h3>
+                            <p>Bringing the design to life with clean, responsive code.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="process-item">
+                        <div class="process-num">05</div>
+                        <div class="process-content">
+                            <h3>DELIVER</h3>
+                            <p>Testing, optimization, and deploying with care.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tools-section">
+                <h2 class="section-title">TECH STACK <span>+</span></h2>
+                <div class="tools-grid">
+                    <div class="tool-card" data-cursor="hover">
+                        <i class="ph ph-file-html"></i>
+                        <span>HTML5</span>
+                    </div>
+                    <div class="tool-card" data-cursor="hover">
+                        <i class="ph ph-file-css"></i>
+                        <span>CSS3</span>
+                    </div>
+                    <div class="tool-card" data-cursor="hover">
+                        <i class="ph ph-file-js"></i>
+                        <span>JavaScript</span>
+                    </div>
+                    <div class="tool-card" data-cursor="hover">
+                        <i class="ph ph-file-code"></i>
+                        <span>PHP</span>
+                    </div>
+                    <div class="tool-card" data-cursor="hover">
+                        <i class="ph ph-terminal-window"></i>
+                        <span>Python</span>
+                    </div>
+                    <div class="tool-card" data-cursor="hover">
+                        <i class="ph ph-brain"></i>
+                        <span>Machine Learning</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about-section" id="about">
+            <h2 class="section-title">ABOUT ME <span>+</span></h2>
+            <div class="about-content">
+                <h3 class="about-headline">Bridging the gap between interactive design and intelligent systems.</h3>
+                <p class="about-text">
+                    I am <span class="about-highlight">Muhammad Aria Sastra</span>, a dedicated Frontend Designer and Developer. I specialize in building robust, interactive, and visually striking web applications. My foundation is built on modern web technologies, allowing me to transform complex problems into elegant digital solutions.
+                </p>
+                <p class="about-text">
+                    With a strong command of HTML, CSS, JavaScript, PHP, and Python, I handle projects ranging from dynamic e-commerce platforms like MerchHub to structured information systems such as Muer Village. I focus on writing clean code and creating user-centered designs that perform seamlessly across all devices.
+                </p>
+                <p class="about-text">
+                    Currently, I am expanding my technical horizon by diving deep into <span class="about-highlight">Machine Learning</span>. I am actively learning how to build and train models for predictive analytics, aiming to integrate artificial intelligence with intuitive frontend interfaces to create smarter web experiences.
+                </p>
+            </div>
+        </section>
+
+        <footer class="footer" id="contact">
+            <div class="footer-grid">
+                
+                <div class="footer-title-col">
+                    <h2 class="footer-subtitle">LET'S CREATE SOMETHING</h2>
+                    <h1 class="footer-title-script">Amazing</h1>
+                </div>
+
+                <div class="footer-cta-col">
+                    <h3 class="footer-availability">I'm Currently Open For New Projects</h3>
+                    <p class="footer-cta-desc">Let's build something impactful and beautiful together.</p>
+                    <a href="mailto:hello@ariasastra.com" class="cta-button" data-cursor="hover">
+                        SEND ME A MESSAGE
+                        <span class="plus-icon">+</span>
+                    </a>
+                </div>
+
+                <div class="footer-contact-col">
+                    <div class="contact-links">
+                        <a href="#" data-cursor="hover"><i class="ph ph-envelope-simple"></i> HELLO@ARIASASTRA.COM</a>
+                        <a href="#" data-cursor="hover"><i class="ph ph-instagram-logo"></i> @ARIA.SASTRA</a>
+                        <span><i class="ph ph-map-pin"></i> YOGYAKARTA, INDONESIA</span>
+                    </div>
+                    <img src="assets/pranataa.png" alt="Aria Sastra" class="footer-avatar">
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                THANK YOU FOR VISITING <span><i class="ph-fill ph-star"></i></span>
+            </div>
+        </footer>
+        
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
