@@ -195,8 +195,19 @@ body.loading {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 5;
+    z-index: 2;
     pointer-events: none;
+}
+
+#cube-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0;
 }
 
 .navbar {
@@ -570,11 +581,16 @@ body.loading {
     }
 }
 
+main {
+    position: relative;
+    z-index: 10;
+}
+
 .projects {
     padding: 15vh 5vw;
     border-top: 1px solid var(--border-color);
     position: relative;
-    background: linear-gradient(to bottom, var(--bg-main), var(--bg-sec));
+    background: transparent !important;
 }
 
 .section-header {
@@ -624,7 +640,7 @@ body.loading {
 }
 
 .project-card {
-    background-color: var(--bg-card);
+    background-color: var(--bg-card) !important;
     border: 1px solid var(--border-color);
     padding: 24px;
     border-radius: 12px;
@@ -634,6 +650,7 @@ body.loading {
     position: relative;
     overflow: hidden;
     transition: border-color 0.4s;
+    z-index: 5;
 }
 
 .project-card:hover {
@@ -725,7 +742,7 @@ body.loading {
     display: grid;
     grid-template-columns: 1fr;
     border-top: 1px solid var(--border-color);
-    background-color: var(--bg-main);
+    background: transparent !important;
 }
 
 @media (min-width: 1024px) {
@@ -739,6 +756,9 @@ body.loading {
 
 .process-section, .tools-section {
     padding: 10vh 5vw;
+    background: transparent !important;
+    position: relative;
+    z-index: 5;
 }
 
 .process-list {
@@ -752,6 +772,10 @@ body.loading {
     display: flex;
     gap: 30px;
     align-items: flex-start;
+    background-color: rgba(18, 11, 16, 0.75);
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
 }
 
 .process-num {
@@ -783,7 +807,7 @@ body.loading {
 }
 
 .tool-card {
-    background-color: var(--bg-card);
+    background-color: var(--bg-card) !important;
     border: 1px solid var(--border-color);
     padding: 20px;
     border-radius: 8px;
@@ -791,6 +815,8 @@ body.loading {
     align-items: center;
     gap: 15px;
     transition: all 0.3s;
+    z-index: 5;
+    position: relative;
 }
 
 .tool-card i {
@@ -818,11 +844,17 @@ body.loading {
 .about-section {
     padding: 15vh 5vw;
     border-top: 1px solid var(--border-color);
-    background: linear-gradient(to bottom, var(--bg-sec), var(--bg-main));
+    background: transparent !important;
+    position: relative;
+    z-index: 5;
 }
 .about-content {
     max-width: 800px;
     margin-top: 60px;
+    background-color: rgba(18, 11, 16, 0.75);
+    padding: 30px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
 }
 .about-headline {
     font-size: clamp(1.5rem, 3vw, 2.5rem);
@@ -843,23 +875,12 @@ body.loading {
     letter-spacing: 1px;
 }
 
-.author-info h4 {
-    font-size: 12px;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
-}
-
-.author-info p {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 2px;
-    color: var(--text-muted);
-}
-
 .footer {
     border-top: 1px solid var(--border-color);
     padding: 10vh 5vw 5vh;
-    background: radial-gradient(circle at bottom, rgba(138, 31, 77, 0.1) 0%, var(--bg-main) 60%);
+    background: transparent !important;
+    position: relative;
+    z-index: 5;
 }
 
 .footer-grid {
@@ -977,4 +998,3 @@ body.loading {
         cursor: auto;
     }
 }
-

@@ -130,7 +130,6 @@ const initGlitchEffect = () => {
 
     const doGlitch = () => {
         const activeGlitch = glitches[Math.floor(Math.random() * glitches.length)];
-        
         const type = Math.random();
         
         if (type < 0.5) {
@@ -336,6 +335,195 @@ const initScrollTriggers = () => {
     });
 };
 
+const initThreeJSCubes = () => {
+    const canvas = document.getElementById('cube-canvas');
+    if (!canvas) return;
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0, 22);
+
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+    scene.add(ambientLight);
+
+    const dirLight = new THREE.DirectionalLight(0xffffff, 2.5);
+    dirLight.position.set(10, 20, 15);
+    scene.add(dirLight);
+
+    const fillLight = new THREE.DirectionalLight(0xd8b4ff, 1.8);
+    fillLight.position.set(-15, 0, -10);
+    scene.add(fillLight);
+
+    const backLight = new THREE.DirectionalLight(0x9d4edd, 2.0);
+    backLight.position.set(0, -15, 10);
+    scene.add(backLight);
+
+    const texCanvas = document.createElement('canvas');
+    texCanvas.width = 512;
+    texCanvas.height = 512;
+    const ctx = texCanvas.getContext('2d');
+    
+    ctx.fillStyle = '#080708';
+    ctx.fillRect(0, 0, 512, 512);
+    ctx.fillStyle = '#9D4EDD';
+    ctx.fillRect(18, 18, 476, 476);
+    
+    const texture = new THREE.CanvasTexture(texCanvas);
+    const material = new THREE.MeshPhysicalMaterial({
+        map: texture,
+        color: 0xccaaff,
+        metalness: 0.9,
+        roughness: 0.15,
+        clearcoat: 1.0,
+        clearcoatRoughness: 0.1
+    });
+
+    const cubes = [];
+    const sizesX = [0.8, 2.8, 0.6];
+    const sizesY = [2.2, 0.5, 1.4];
+    const sizesZ = [0.5, 1.9, 0.8];
+    const gap = 0.12;
+
+    const totalX = sizesX[0] + sizesX[1] + sizesX[2] + gap * 2;
+    const totalY = sizesY[0] + sizesY[1] + sizesY[2] + gap * 2;
+    const totalZ = sizesZ[0] + sizesZ[1] + sizesZ[2] + gap * 2;
+
+    const group = new THREE.Group();
+    scene.add(group);
+
+    let currentX = -totalX / 2;
+    
+    for (let i = 0; i < 3; i++) {
+        const w = sizesX[i];
+        const cx = currentX + w / 2;
+        let currentY = -totalY / 2;
+        
+        for (let j = 0; j < 3; j++) {
+            const h = sizesY[j];
+            const cy = currentY + h / 2;
+            let currentZ = -totalZ / 2;
+            
+            for (let k = 0; k < 3; k++) {
+                const d = sizesZ[k];
+                const cz = currentZ + d / 2;
+
+                const geo = new THREE.BoxGeometry(w, h, d);
+                const mesh = new THREE.Mesh(geo, material);
+
+                const targetPos = new THREE.Vector3(cx, cy, cz);
+                const startPos = new THREE.Vector3(
+                    cx + (Math.random() - 0.5) * 55,
+                    cy + (Math.random() - 0.5) * 55,
+                    cz + (Math.random() - 0.5) * 45 + 20
+                );
+
+                const targetRot = new THREE.Euler(0, 0, 0);
+                const startRot = new THREE.Euler(
+                    Math.random() * Math.PI * 8,
+                    Math.random() * Math.PI * 8,
+                    Math.random() * Math.PI * 8
+                );
+
+                mesh.position.copy(startPos);
+                mesh.rotation.copy(startRot);
+
+                group.add(mesh);
+                cubes.push({ 
+                    mesh, 
+                    startPos, 
+                    targetPos, 
+                    startRot, 
+                    targetRot,
+                    glitchOffset: new THREE.Vector3(0, 0, 0),
+                    glitchScale: new THREE.Vector3(1, 1, 1)
+                });
+
+                currentZ += d + gap;
+            }
+            currentY += h + gap;
+        }
+        currentX += w + gap;
+    }
+
+    group.rotation.x = 0.5;
+    group.rotation.y = -0.5;
+
+    let currentScrollProgress = 0;
+
+    setInterval(() => {
+        if (Math.random() > 0.4) {
+            const c = cubes[Math.floor(Math.random() * cubes.length)];
+            c.glitchOffset.set(
+                (Math.random() - 0.5) * 3,
+                (Math.random() - 0.5) * 3,
+                (Math.random() - 0.5) * 3
+            );
+            c.glitchScale.set(
+                1 + (Math.random() - 0.5) * 0.8,
+                1 + (Math.random() - 0.5) * 0.8,
+                1 + (Math.random() - 0.5) * 0.8
+            );
+
+            setTimeout(() => {
+                c.glitchOffset.set(0, 0, 0);
+                c.glitchScale.set(1, 1, 1);
+            }, Math.random() * 120 + 30);
+        }
+    }, 80);
+
+    const render = () => {
+        const easeProgress = gsap.parseEase("power3.inOut")(currentScrollProgress);
+        
+        cubes.forEach(cube => {
+            cube.mesh.position.lerpVectors(cube.startPos, cube.targetPos, easeProgress);
+            cube.mesh.position.add(cube.glitchOffset);
+            cube.mesh.scale.copy(cube.glitchScale);
+            
+            cube.mesh.rotation.x = gsap.utils.interpolate(cube.startRot.x, cube.targetRot.x, easeProgress);
+            cube.mesh.rotation.y = gsap.utils.interpolate(cube.startRot.y, cube.targetRot.y, easeProgress);
+            cube.mesh.rotation.z = gsap.utils.interpolate(cube.startRot.z, cube.targetRot.z, easeProgress);
+        });
+        
+        group.rotation.y = -0.5 + (easeProgress * Math.PI * 2.5);
+        group.rotation.x = 0.5 + (easeProgress * 0.6);
+
+        renderer.render(scene, camera);
+    };
+
+    gsap.ticker.add(render);
+
+    ScrollTrigger.create({
+        trigger: ".projects",
+        start: "top 80%",
+        endTrigger: ".footer",
+        end: "bottom bottom",
+        scrub: 1.5,
+        onEnter: () => gsap.to(canvas, { opacity: 1, duration: 0.8, ease: "power2.out" }),
+        onLeave: () => gsap.to(canvas, { opacity: 0, duration: 0.8, ease: "power2.out" }),
+        onEnterBack: () => gsap.to(canvas, { opacity: 1, duration: 0.8, ease: "power2.out" }),
+        onLeaveBack: () => gsap.to(canvas, { opacity: 0, duration: 0.8, ease: "power2.out" }),
+        onUpdate: (self) => {
+            currentScrollProgress = self.progress;
+        }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+        const x = (e.clientX / window.innerWidth - 0.5) * 1.5;
+        const y = (e.clientY / window.innerHeight - 0.5) * 1.5;
+        gsap.to(group.position, { x: x, y: -y, duration: 2.5, ease: "power3.out" });
+    });
+
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         initLenis();
@@ -349,4 +537,5 @@ document.addEventListener("DOMContentLoaded", () => {
     initScanline();
     initNavbarScroll();
     initScrollTriggers();
+    initThreeJSCubes();
 });
