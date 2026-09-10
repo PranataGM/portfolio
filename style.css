@@ -12,12 +12,35 @@
   --neon-light: #d8b4ff;
   --neon-white: #ffffff;
 
-  --font-serif: "DM Serif Display", serif;
+  --font-serif: "Cinzel", serif;
   --font-sans: "Inter", sans-serif;
-  --font-script: "Great Vibes", cursive;
+  --font-script: "Dancing Script", cursive;
   --font-mono: "Space Mono", monospace;
 
   --border-color: rgba(155, 143, 143, 0.15);
+  --card-backdrop: none;
+  --card-shadow: none;
+  --nav-bg: rgba(8, 7, 8, 0.75);
+}
+
+:root.light-mode {
+  --bg-main: #f0f4f8;
+  --bg-sec: #e8ecf2;
+  --bg-card: rgba(255, 255, 255, 0.4);
+  --text-main: #1c2b4f;
+  --text-muted: #6b7a99;
+
+  --accent-red: #6c5ce7;
+  --accent-pink: #a29bfe;
+
+  --neon-purple: #74b9ff;
+  --neon-light: #a29bfe;
+  --neon-white: #0984e3;
+
+  --border-color: rgba(255, 255, 255, 0.8);
+  --card-backdrop: blur(16px);
+  --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+  --nav-bg: rgba(255, 255, 255, 0.6);
 }
 
 * {
@@ -231,8 +254,9 @@ body.loading {
 }
 
 .navbar.scrolled {
-  background-color: rgba(8, 7, 8, 0.75);
-  backdrop-filter: blur(10px);
+  background-color: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   padding: 20px 5vw;
   border-bottom: 1px solid var(--border-color);
 }
@@ -366,15 +390,16 @@ body.loading {
   text-align: center;
   margin: 0;
   padding: 0;
-  font-family: "Didot", "Bodoni MT", "Bodoni Moda", serif;
+  font-family: var(--font-serif);
+  font-weight: 700;
 }
 
 .wheel-container {
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: clamp(300px, 50vw, 700px);
+  width: clamp(250px, 45vw, 600px);
   aspect-ratio: 1;
   z-index: 30;
   pointer-events: none;
@@ -693,6 +718,9 @@ main {
 .project-card {
   background-color: var(--bg-card) !important;
   border: 1px solid var(--border-color);
+  backdrop-filter: var(--card-backdrop);
+  -webkit-backdrop-filter: var(--card-backdrop);
+  box-shadow: var(--card-shadow);
   padding: 24px;
   border-radius: 12px;
   display: flex;
@@ -824,7 +852,10 @@ main {
   display: flex;
   gap: 30px;
   align-items: flex-start;
-  background-color: rgba(18, 11, 16, 0.75);
+  background-color: var(--bg-card);
+  backdrop-filter: var(--card-backdrop);
+  -webkit-backdrop-filter: var(--card-backdrop);
+  box-shadow: var(--card-shadow);
   padding: 20px;
   border-radius: 8px;
   border: 1px solid var(--border-color);
@@ -861,6 +892,9 @@ main {
 .tool-card {
   background-color: var(--bg-card) !important;
   border: 1px solid var(--border-color);
+  backdrop-filter: var(--card-backdrop);
+  -webkit-backdrop-filter: var(--card-backdrop);
+  box-shadow: var(--card-shadow);
   padding: 20px;
   border-radius: 8px;
   display: flex;
@@ -909,7 +943,10 @@ main {
 .about-content {
   max-width: 800px;
   margin-top: 60px;
-  background-color: rgba(18, 11, 16, 0.75);
+  background-color: var(--bg-card);
+  backdrop-filter: var(--card-backdrop);
+  -webkit-backdrop-filter: var(--card-backdrop);
+  box-shadow: var(--card-shadow);
   padding: 30px;
   border-radius: 12px;
   border: 1px solid var(--border-color);

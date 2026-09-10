@@ -8,15 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&family=Great+Vibes&family=Space+Mono:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"></script>
-    <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   </head>
   <body class="loading">
     <div class="loader">
@@ -53,6 +48,23 @@
         <span class="status-dot"></span>
         <span>SYSTEM / 001</span>
       </div>
+      <button
+        id="themeToggle"
+        data-cursor="hover"
+        style="
+          background: none;
+          border: none;
+          color: var(--text-main);
+          font-size: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 100;
+          transition: color 0.3s;
+        "
+      >
+        <i class="ph ph-sun"></i>
+      </button>
       <button class="menu-btn" data-cursor="hover">
         <span></span>
         <span></span>
@@ -324,6 +336,8 @@
                 src="./assets/This%20life%20is%20not%20found.jpg"
                 alt="TixManage"
                 class="project-img"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div class="project-tags">
@@ -343,9 +357,11 @@
             <div class="project-image-wrapper">
               <div class="project-overlay"></div>
               <img
-                src="./assets/This%20life%20is%20not%20found.jpg?auto=format&fit=crop&q=80"
+                src="./assets/This%20life%20is%20not%20found.jpg"
                 alt="MerchHub"
                 class="project-img"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div class="project-tags">
@@ -364,9 +380,11 @@
             <div class="project-image-wrapper">
               <div class="project-overlay"></div>
               <img
-                src="./assets/This%20life%20is%20not%20found.jpg?auto=format&fit=crop&q=80"
+                src="./assets/This%20life%20is%20not%20found.jpg"
                 alt="StockFlow"
                 class="project-img"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div class="project-tags">
@@ -386,9 +404,11 @@
             <div class="project-image-wrapper">
               <div class="project-overlay"></div>
               <img
-                src="./assets/This%20life%20is%20not%20found.jpg?auto=format&fit=crop&q=80"
+                src="./assets/This%20life%20is%20not%20found.jpg"
                 alt="Muer Village"
                 class="project-img"
+                loading="lazy"
+                decoding="async"
               />
             </div>
             <div class="project-tags">
@@ -544,6 +564,8 @@
               src="assets/pranataa.png"
               alt="Aria Sastra"
               class="footer-avatar"
+              loading="lazy"
+              decoding="async"
             />
           </div>
         </div>
@@ -554,6 +576,23 @@
       </footer>
     </main>
 
-    <script src="script.js"></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"
+    ></script>
+    <script
+      defer
+      src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"
+    ></script>
+    <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
+    ></script>
+    <script defer src="script.js"></script>
   </body>
 </html>

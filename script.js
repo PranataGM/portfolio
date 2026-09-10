@@ -420,70 +420,52 @@ const initThreeJSCubes = () => {
   });
 
   const cubes = [];
-  const sizesX = [0.8, 2.8, 0.6];
-  const sizesY = [2.2, 0.5, 1.4];
-  const sizesZ = [0.5, 1.9, 0.8];
-  const gap = 0.12;
-
-  const totalX = sizesX[0] + sizesX[1] + sizesX[2] + gap * 2;
-  const totalY = sizesY[0] + sizesY[1] + sizesY[2] + gap * 2;
-  const totalZ = sizesZ[0] + sizesZ[1] + sizesZ[2] + gap * 2;
-
   const group = new THREE.Group();
   scene.add(group);
 
-  let currentX = -totalX / 2;
+  for (let i = 0; i < 20; i++) {
+    const radius = Math.random() * 2 + 0.8;
+    // detail=0 for Icosahedron makes an angular crystal-like shape
+    const geo = new THREE.IcosahedronGeometry(radius, 0);
+    // slightly deform it for an abstract look
+    geo.scale(1, Math.random() * 1.5 + 0.5, Math.random() * 1.5 + 0.5);
+    const mesh = new THREE.Mesh(geo, material);
 
-  for (let i = 0; i < 3; i++) {
-    const w = sizesX[i];
-    const cx = currentX + w / 2;
-    let currentY = -totalY / 2;
+    const targetPos = new THREE.Vector3(
+      (Math.random() - 0.5) * 8,
+      (Math.random() - 0.5) * 8,
+      (Math.random() - 0.5) * 8,
+    );
+    const startPos = new THREE.Vector3(
+      targetPos.x + (Math.random() - 0.5) * 55,
+      targetPos.y + (Math.random() - 0.5) * 55,
+      targetPos.z + (Math.random() - 0.5) * 45 + 20,
+    );
 
-    for (let j = 0; j < 3; j++) {
-      const h = sizesY[j];
-      const cy = currentY + h / 2;
-      let currentZ = -totalZ / 2;
+    const targetRot = new THREE.Euler(
+      Math.random() * Math.PI * 2,
+      Math.random() * Math.PI * 2,
+      Math.random() * Math.PI * 2,
+    );
+    const startRot = new THREE.Euler(
+      Math.random() * Math.PI * 8,
+      Math.random() * Math.PI * 8,
+      Math.random() * Math.PI * 8,
+    );
 
-      for (let k = 0; k < 3; k++) {
-        const d = sizesZ[k];
-        const cz = currentZ + d / 2;
+    mesh.position.copy(startPos);
+    mesh.rotation.copy(startRot);
 
-        const geo = new THREE.BoxGeometry(w, h, d);
-        const mesh = new THREE.Mesh(geo, material);
-
-        const targetPos = new THREE.Vector3(cx, cy, cz);
-        const startPos = new THREE.Vector3(
-          cx + (Math.random() - 0.5) * 55,
-          cy + (Math.random() - 0.5) * 55,
-          cz + (Math.random() - 0.5) * 45 + 20,
-        );
-
-        const targetRot = new THREE.Euler(0, 0, 0);
-        const startRot = new THREE.Euler(
-          Math.random() * Math.PI * 8,
-          Math.random() * Math.PI * 8,
-          Math.random() * Math.PI * 8,
-        );
-
-        mesh.position.copy(startPos);
-        mesh.rotation.copy(startRot);
-
-        group.add(mesh);
-        cubes.push({
-          mesh,
-          startPos,
-          targetPos,
-          startRot,
-          targetRot,
-          glitchOffset: new THREE.Vector3(0, 0, 0),
-          glitchScale: new THREE.Vector3(1, 1, 1),
-        });
-
-        currentZ += d + gap;
-      }
-      currentY += h + gap;
-    }
-    currentX += w + gap;
+    group.add(mesh);
+    cubes.push({
+      mesh,
+      startPos,
+      targetPos,
+      startRot,
+      targetRot,
+      glitchOffset: new THREE.Vector3(0, 0, 0),
+      glitchScale: new THREE.Vector3(1, 1, 1),
+    });
   }
 
   group.rotation.x = 0.5;
@@ -515,7 +497,11 @@ const initThreeJSCubes = () => {
     }
   }, 80);
 
+  let isVisible = false;
+
   const render = () => {
+    if (!isVisible && canvas.style.opacity === "0") return;
+
     const easeProgress = gsap.parseEase("power3.inOut")(currentScrollProgress);
 
     cubes.forEach((cube) => {
@@ -558,14 +544,28 @@ const initThreeJSCubes = () => {
     endTrigger: ".footer",
     end: "bottom bottom",
     scrub: 1.5,
-    onEnter: () =>
-      gsap.to(canvas, { opacity: 1, duration: 0.8, ease: "power2.out" }),
+    onEnter: () => {
+      isVisible = true;
+      gsap.to(canvas, { opacity: 1, duration: 0.8, ease: "power2.out" });
+    },
     onLeave: () =>
-      gsap.to(canvas, { opacity: 0, duration: 0.8, ease: "power2.out" }),
-    onEnterBack: () =>
-      gsap.to(canvas, { opacity: 1, duration: 0.8, ease: "power2.out" }),
+      gsap.to(canvas, {
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        onComplete: () => (isVisible = false),
+      }),
+    onEnterBack: () => {
+      isVisible = true;
+      gsap.to(canvas, { opacity: 1, duration: 0.8, ease: "power2.out" });
+    },
     onLeaveBack: () =>
-      gsap.to(canvas, { opacity: 0, duration: 0.8, ease: "power2.out" }),
+      gsap.to(canvas, {
+        opacity: 0,
+        duration: 0.8,
+        ease: "power2.out",
+        onComplete: () => (isVisible = false),
+      }),
     onUpdate: (self) => {
       currentScrollProgress = self.progress;
     },
@@ -584,10 +584,28 @@ const initThreeJSCubes = () => {
   });
 };
 
+const initThemeToggle = () => {
+  const toggleBtn = document.getElementById("themeToggle");
+  if (!toggleBtn) return;
+  const icon = toggleBtn.querySelector("i");
+
+  toggleBtn.addEventListener("click", () => {
+    document.documentElement.classList.toggle("light-mode");
+    if (document.documentElement.classList.contains("light-mode")) {
+      icon.classList.remove("ph-sun");
+      icon.classList.add("ph-moon");
+    } else {
+      icon.classList.remove("ph-moon");
+      icon.classList.add("ph-sun");
+    }
+  });
+};
+
 document.addEventListener("DOMContentLoaded", () => {
   if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     initLenis();
   }
+  initThemeToggle();
   initLoading();
   initCustomCursor();
   initWheelAnimation();
