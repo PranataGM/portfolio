@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;800&family=Dancing+Script:wght@400;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&family=Great+Vibes&family=Roboto:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
@@ -34,41 +34,27 @@
     <div class="scanline"></div>
     <canvas id="particle-canvas"></canvas>
 
-    <canvas id="cube-canvas"></canvas>
-
     <nav class="navbar">
-      <div class="nav-logo">MAS&reg;</div>
+      <a href="#hero" class="nav-logo" data-cursor="hover" style="text-decoration: none; color: inherit;">MAS&reg;</a>
       <div class="nav-links">
         <a href="#work" data-cursor="hover">WORK</a>
         <a href="#process" data-cursor="hover">PROCESS</a>
         <a href="#about" data-cursor="hover">ABOUT</a>
         <a href="#contact" data-cursor="hover">CONTACT</a>
       </div>
-      <div class="nav-status">
-        <span class="status-dot"></span>
-        <span>SYSTEM / 001</span>
+      <div class="nav-right">
+        <button id="themeToggle" data-cursor="hover" style="background: none; border: none; color: var(--text-main); font-size: 20px; display: flex; align-items: center; justify-content: center; z-index: 100; transition: color 0.3s; cursor: pointer;">
+          <i class="ph ph-sun"></i>
+        </button>
+        <div class="nav-status">
+          <span class="status-dot"></span>
+          <span>SYSTEM / 001</span>
+        </div>
+        <button class="menu-btn" data-cursor="hover">
+          <span></span>
+          <span></span>
+        </button>
       </div>
-      <button
-        id="themeToggle"
-        data-cursor="hover"
-        style="
-          background: none;
-          border: none;
-          color: var(--text-main);
-          font-size: 24px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          z-index: 100;
-          transition: color 0.3s;
-        "
-      >
-        <i class="ph ph-sun"></i>
-      </button>
-      <button class="menu-btn" data-cursor="hover">
-        <span></span>
-        <span></span>
-      </button>
     </nav>
 
     <main data-scroll-container>
@@ -76,7 +62,7 @@
         <div class="hero-ambient-light"></div>
 
         <div class="hero-bg-text">
-          <h1 class="hero-title-main">PORTFOLI0</h1>
+          <h1 class="hero-title-main"></h1>
         </div>
 
         <div class="wheel-container" id="mahoraga-wheel">
@@ -589,10 +575,6 @@
       src="https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js"
     ></script>
     <script defer src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script
-      defer
-      src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
-    ></script>
     <script defer src="script.js"></script>
   </body>
 </html>

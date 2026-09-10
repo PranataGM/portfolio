@@ -1,7 +1,8 @@
 gsap.registerPlugin(ScrollTrigger);
 
+let lenis;
 const initLenis = () => {
-  const lenis = new Lenis({
+  lenis = new Lenis({
     duration: 1.2,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     smooth: true,
@@ -14,6 +15,21 @@ const initLenis = () => {
     lenis.raf(time * 1000);
   });
   gsap.ticker.lagSmoothing(0);
+};
+
+const initSmoothScroll = () => {
+  const navLinks = document.querySelectorAll('.nav-links a, .nav-logo');
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (lenis && target) {
+        lenis.scrollTo(target, { duration: 1.5 });
+      } else if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
 };
 
 const initLoading = () => {
@@ -269,8 +285,8 @@ const initHeroAnimations = () => {
 
   tl.fromTo(
     ".hero-title-main",
-    { opacity: 0, scale: 0.9, y: 50 },
-    { opacity: 1, scale: 1, y: 0, duration: 1.5, ease: "power3.out" },
+    { opacity: 0, y: 50 },
+    { opacity: 1, y: 0, duration: 1.5, ease: "power3.out" },
   )
     .fromTo(
       ".wheel-container",
@@ -363,227 +379,6 @@ const initScrollTriggers = () => {
   });
 };
 
-const initThreeJSCubes = () => {
-  const canvas = document.getElementById("cube-canvas");
-  if (!canvas) return;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    100,
-  );
-  camera.position.set(0, 0, 22);
-
-  const renderer = new THREE.WebGLRenderer({
-    canvas,
-    alpha: true,
-    antialias: true,
-  });
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-  const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
-  scene.add(ambientLight);
-
-  const dirLight = new THREE.DirectionalLight(0xffffff, 2.5);
-  dirLight.position.set(10, 20, 15);
-  scene.add(dirLight);
-
-  const fillLight = new THREE.DirectionalLight(0xd8b4ff, 1.8);
-  fillLight.position.set(-15, 0, -10);
-  scene.add(fillLight);
-
-  const backLight = new THREE.DirectionalLight(0x9d4edd, 2.0);
-  backLight.position.set(0, -15, 10);
-  scene.add(backLight);
-
-  const texCanvas = document.createElement("canvas");
-  texCanvas.width = 512;
-  texCanvas.height = 512;
-  const ctx = texCanvas.getContext("2d");
-
-  ctx.fillStyle = "#080708";
-  ctx.fillRect(0, 0, 512, 512);
-  ctx.fillStyle = "#9D4EDD";
-  ctx.fillRect(18, 18, 476, 476);
-
-  const texture = new THREE.CanvasTexture(texCanvas);
-  const material = new THREE.MeshPhysicalMaterial({
-    map: texture,
-    color: 0xccaaff,
-    metalness: 0.9,
-    roughness: 0.15,
-    clearcoat: 1.0,
-    clearcoatRoughness: 0.1,
-  });
-
-  const cubes = [];
-  const group = new THREE.Group();
-  scene.add(group);
-
-  for (let i = 0; i < 20; i++) {
-    const radius = Math.random() * 2 + 0.8;
-    // detail=0 for Icosahedron makes an angular crystal-like shape
-    const geo = new THREE.IcosahedronGeometry(radius, 0);
-    // slightly deform it for an abstract look
-    geo.scale(1, Math.random() * 1.5 + 0.5, Math.random() * 1.5 + 0.5);
-    const mesh = new THREE.Mesh(geo, material);
-
-    const targetPos = new THREE.Vector3(
-      (Math.random() - 0.5) * 8,
-      (Math.random() - 0.5) * 8,
-      (Math.random() - 0.5) * 8,
-    );
-    const startPos = new THREE.Vector3(
-      targetPos.x + (Math.random() - 0.5) * 55,
-      targetPos.y + (Math.random() - 0.5) * 55,
-      targetPos.z + (Math.random() - 0.5) * 45 + 20,
-    );
-
-    const targetRot = new THREE.Euler(
-      Math.random() * Math.PI * 2,
-      Math.random() * Math.PI * 2,
-      Math.random() * Math.PI * 2,
-    );
-    const startRot = new THREE.Euler(
-      Math.random() * Math.PI * 8,
-      Math.random() * Math.PI * 8,
-      Math.random() * Math.PI * 8,
-    );
-
-    mesh.position.copy(startPos);
-    mesh.rotation.copy(startRot);
-
-    group.add(mesh);
-    cubes.push({
-      mesh,
-      startPos,
-      targetPos,
-      startRot,
-      targetRot,
-      glitchOffset: new THREE.Vector3(0, 0, 0),
-      glitchScale: new THREE.Vector3(1, 1, 1),
-    });
-  }
-
-  group.rotation.x = 0.5;
-  group.rotation.y = -0.5;
-
-  let currentScrollProgress = 0;
-
-  setInterval(() => {
-    if (Math.random() > 0.4) {
-      const c = cubes[Math.floor(Math.random() * cubes.length)];
-      c.glitchOffset.set(
-        (Math.random() - 0.5) * 3,
-        (Math.random() - 0.5) * 3,
-        (Math.random() - 0.5) * 3,
-      );
-      c.glitchScale.set(
-        1 + (Math.random() - 0.5) * 0.8,
-        1 + (Math.random() - 0.5) * 0.8,
-        1 + (Math.random() - 0.5) * 0.8,
-      );
-
-      setTimeout(
-        () => {
-          c.glitchOffset.set(0, 0, 0);
-          c.glitchScale.set(1, 1, 1);
-        },
-        Math.random() * 120 + 30,
-      );
-    }
-  }, 80);
-
-  let isVisible = false;
-
-  const render = () => {
-    if (!isVisible && canvas.style.opacity === "0") return;
-
-    const easeProgress = gsap.parseEase("power3.inOut")(currentScrollProgress);
-
-    cubes.forEach((cube) => {
-      cube.mesh.position.lerpVectors(
-        cube.startPos,
-        cube.targetPos,
-        easeProgress,
-      );
-      cube.mesh.position.add(cube.glitchOffset);
-      cube.mesh.scale.copy(cube.glitchScale);
-
-      cube.mesh.rotation.x = gsap.utils.interpolate(
-        cube.startRot.x,
-        cube.targetRot.x,
-        easeProgress,
-      );
-      cube.mesh.rotation.y = gsap.utils.interpolate(
-        cube.startRot.y,
-        cube.targetRot.y,
-        easeProgress,
-      );
-      cube.mesh.rotation.z = gsap.utils.interpolate(
-        cube.startRot.z,
-        cube.targetRot.z,
-        easeProgress,
-      );
-    });
-
-    group.rotation.y = -0.5 + easeProgress * Math.PI * 2.5;
-    group.rotation.x = 0.5 + easeProgress * 0.6;
-
-    renderer.render(scene, camera);
-  };
-
-  gsap.ticker.add(render);
-
-  ScrollTrigger.create({
-    trigger: ".projects",
-    start: "top 80%",
-    endTrigger: ".footer",
-    end: "bottom bottom",
-    scrub: 1.5,
-    onEnter: () => {
-      isVisible = true;
-      gsap.to(canvas, { opacity: 1, duration: 0.8, ease: "power2.out" });
-    },
-    onLeave: () =>
-      gsap.to(canvas, {
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out",
-        onComplete: () => (isVisible = false),
-      }),
-    onEnterBack: () => {
-      isVisible = true;
-      gsap.to(canvas, { opacity: 1, duration: 0.8, ease: "power2.out" });
-    },
-    onLeaveBack: () =>
-      gsap.to(canvas, {
-        opacity: 0,
-        duration: 0.8,
-        ease: "power2.out",
-        onComplete: () => (isVisible = false),
-      }),
-    onUpdate: (self) => {
-      currentScrollProgress = self.progress;
-    },
-  });
-
-  window.addEventListener("mousemove", (e) => {
-    const x = (e.clientX / window.innerWidth - 0.5) * 1.5;
-    const y = (e.clientY / window.innerHeight - 0.5) * 1.5;
-    gsap.to(group.position, { x: x, y: -y, duration: 2.5, ease: "power3.out" });
-  });
-
-  window.addEventListener("resize", () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-  });
-};
-
 const initThemeToggle = () => {
   const toggleBtn = document.getElementById("themeToggle");
   if (!toggleBtn) return;
@@ -605,6 +400,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     initLenis();
   }
+  initSmoothScroll();
   initThemeToggle();
   initLoading();
   initCustomCursor();
@@ -615,5 +411,4 @@ document.addEventListener("DOMContentLoaded", () => {
   initScanline();
   initNavbarScroll();
   initScrollTriggers();
-  initThreeJSCubes();
 });
